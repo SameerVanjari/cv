@@ -15,9 +15,15 @@ import ParabolLogo from "./parabol.svg";
 import TastyCloudLogo from "./tastycloud.png";
 import YearProgressLogo from "./yearprogress.svg";
 import Minimal from "./minimal.svg";
+import CXRLogo from "./CXRLOGO.jpg";
+import CemtrexLogo from "./cemtrex.jpeg";
+import FractalLogo from "./fractal.svg";
 
 export {
   ConsultlyLogo,
+  CemtrexLogo,
+  CXRLogo,
+  FractalLogo,
   AmbitLogo,
   BarepapersLogo,
   BimLogo,
