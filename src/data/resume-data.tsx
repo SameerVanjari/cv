@@ -87,6 +87,7 @@ export const RESUME_DATA = {
     },
     {
       company: "Freelancer",
+      link: "",
       title: "Web Developer",
       start: "Jul 2020",
       end: "Apr 2022",
