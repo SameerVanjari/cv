@@ -30,7 +30,7 @@ export const RESUME_DATA = {
   about:
     "Software Developer building products that help businesses and draw people's interest",
   summary:
-    "As a Software developer, I have successfully created products for clients from scratch. I helped teams complete several client projects too.  I've spent around 2 years honing my skills. I have been working with CXR.Agency , where I've contributed to several projects in various industries. Currently, I work mostly with TypeScript, NextJS, React, Node.js. I also love to learn and try new tech (currently looking into GO).",
+    "As a Software developer, I have successfully created products for clients from scratch. I helped teams complete several client projects too.  I've spent around 1.5 years as a Freelance dev, working for local businesses, then 2 years honing my skills at agencies like CXR.Agency. I've contributed to several projects in various industries. Currently, I work mostly with TypeScript, NextJS, React, Node.js. I also love to learn and try new tech (currently looking into GO).",
   avatarUrl: "https://avatars.githubusercontent.com/u/71498176?v=4",
   // personalWebsiteUrl: "https://jarocki.me",
   contact: {
@@ -85,6 +85,14 @@ export const RESUME_DATA = {
       description:
         "Worked as frontend dev, creating admin dashboards for different projects, both internal and client. Contributed to creating landing pages for client sites.",
     },
+    {
+      company: "Freelancer",
+      title: "Web Developer",
+      start: "Jul 2020",
+      end: "Apr 2022",
+      description:
+        "Worked as Freelance dev, creating landing pages for local businesses. Worked in mostly React and Bootstrap.",
+    },
   ],
   skills: [
     "JavaScript",
@@ -92,6 +100,8 @@ export const RESUME_DATA = {
     "React/Next.js",
     "Node.js/AdonisJS",
     "Tailwind",
+    "Strapi",
+    "Shopify API",
   ],
   projects: [
     {
@@ -106,16 +116,20 @@ export const RESUME_DATA = {
       },
     },
     {
-      title: "CXR Agency Chatbot",
-      techStack: ["AI Chatbot", "TypeScript", "Next.js", "OpenAi"],
-      description:
-        "A chatbot answering all the questions related to the site, built with OpenAI completions API",
-    },
-    {
       title: "Dashborde",
       techStack: ["Next.js", "Strapi", "Cloudinary"],
       description:
         "A client web app, containing a combination of 3 apps in one, a blog, an e-commerce platform, and a travel guide.",
+      link: {
+        label: "Dashborde",
+        href: "https://beta.dashborde.com//",
+      },
+    },
+    {
+      title: "CXR Agency Chatbot",
+      techStack: ["AI Chatbot", "TypeScript", "Next.js", "OpenAi"],
+      description:
+        "A chatbot answering all the questions related to the site, built with OpenAI completions API",
     },
     {
       title: "Terralab",
