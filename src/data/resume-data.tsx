@@ -107,6 +107,16 @@ export const RESUME_DATA = {
   ],
   projects: [
     {
+      title: "HeroGen",
+      techStack: ["NextJS", "OpenAI", "AI tool"],
+      description:
+        "An AI powered tool which generates Blog Hero images with the help of Dall-E-3. It takes the title and some content of the blog to create a summary for the blog and generate an image from it.",
+      link: {
+        label: "Hero Gen",
+        href: "https://blog-image-generator-sable.vercel.app/",
+      },
+    },
+    {
       title: "Fractal.ai",
       techStack: ["WordPress", "Custom Theme", "CSS"],
       description:
