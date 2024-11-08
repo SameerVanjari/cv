@@ -63,6 +63,16 @@ export const RESUME_DATA = {
     },
   ],
   work: [
+     {
+      company: "Zitics",
+      link: "https://zitics.com/",
+      badges: ["On site"],
+      title: "Senior member of Develoment Team",
+      start: "Jul 2024",
+      end: "Present",
+      description:
+        "Leading the UI development team for a Fin-tech platform focused on banking products, overseeing both design and functionality to ensure a seamless, user-centric application experience.",
+    },
     {
       company: "CXR.Agency",
       link: "https://cxr.agency",
@@ -70,7 +80,7 @@ export const RESUME_DATA = {
       title: "Software Developer",
       logo: CXRLogo,
       start: "Apr 2023",
-      end: "Present",
+      end: "Jul 2024",
       description:
         "Worked on projects for different clients from different industries like ecommerce, environment agencies, gaming industries etc.",
     },
