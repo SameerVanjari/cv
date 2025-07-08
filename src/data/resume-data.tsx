@@ -144,7 +144,7 @@ export const RESUME_DATA = {
         "A client web app, containing a combination of 3 apps in one, a blog, an e-commerce platform, and a travel guide.",
       link: {
         label: "Dashborde",
-        href: "https://beta.dashborde.com//",
+        href: "https://dashborde.com/",
       },
     },
     {
