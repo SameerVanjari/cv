@@ -27,9 +27,9 @@ export const RESUME_DATA = {
   initials: "SV",
   location: "Pune, India",
   locationLink: "https://www.google.com/maps/place/Pune,+Maharashtra,+India",
-  about: "Senior Frontend Engineer — React.js · Next.js · TypeScript",
+  about: "Senior Frontend Engineer building fast, modern and user-friendly websites",
   summary:
-    "Frontend Engineer with 4+ years of experience building scalable, high-performance web applications using React.js, Next.js, Vue.js and TypeScript. Hands-on experience creating interactive web experiences with React Three Fiber, WebGL concepts, and GLSL shader fundamentals. Proven track record of leading frontend architecture, building AI-integrated products, and mentoring developers in fast-paced Agile environments. Expert in component-driven design, micro frontend architecture, SSR/ISR patterns, and seamless API integration. Open to remote roles globally and in-office roles with visa sponsorship.",
+    "Senior Frontend Engineer with 4+ years of experience building fast, scalable web apps with React, Next.js and TypeScript. I focus on clean code, great user experience, and leading teams to ship AI-powered products. Open to remote roles worldwide and on-site roles with visa sponsorship.",
   avatarUrl: "/avatar.png",
   personalWebsiteUrl: "https://sameer-vanjari.vercel.app",
   contact: {
