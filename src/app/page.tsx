@@ -20,11 +20,13 @@ import {
   Star,
 } from "lucide-react";
 import { GitHubIcon, LinkedInIcon, XIcon } from "@/components/icons";
+import { AboutIllustration } from "@/components/about-illustration";
 import { useState, useRef, useEffect } from "react";
 
 const CURATED_IDS = [
   "tuscani-villa",
   "chess-game",
+  "zitics-com",
   "3d-restaurant-menus",
   "21-global-replica",
   "nobel-portfolio-redesign",
@@ -158,7 +160,7 @@ function DraggablePill({
   const disableMotion = reduce || isCoarse;
   if (disableMotion) {
     return (
-      <div className={className} style={rotate ? { rotate: `${rotate}deg` } : undefined}>
+      <div className={className} style={rotate ? ({ "--pill-rotate": `${rotate}deg`, rotate: `${rotate}deg` } as React.CSSProperties) : undefined}>
         {children}
       </div>
     );
@@ -166,11 +168,13 @@ function DraggablePill({
   return (
     <motion.div
       className={`${className} ${!isDragging ? `pill-bob ${bobClass}` : "pill-dragging"} cursor-grab active:cursor-grabbing select-none touch-manipulation transition-[transform] duration-160 ease-out hover:scale-[1.02] active:scale-[0.97]`}
-      style={{
-        rotate,
-        zIndex: isDragging ? 50 : zIndex,
-        willChange: isDragging ? "transform" : undefined,
-      }}
+      style={
+        {
+          "--pill-rotate": `${rotate}deg`,
+          zIndex: isDragging ? 50 : zIndex,
+          willChange: isDragging ? "transform" : undefined,
+        } as React.CSSProperties
+      }
       drag
       dragMomentum={false}
       dragElastic={0.32}
@@ -391,7 +395,7 @@ export default function Page() {
                 <p className="mt-3 line-clamp-3 text-pretty text-[13px] leading-relaxed text-zinc-600 dark:text-zinc-400">{CURATED[0]?.description}</p>
                 <ul className="mt-3 grid gap-1">{(CURATED[0]?.features as string[] | undefined)?.slice(0, 3).map((f) => (<li key={f} className="flex gap-1.5 font-mono text-[11px] leading-relaxed text-zinc-600 dark:text-zinc-400"><span className="mt-1 size-1 rounded-full bg-teal-500" /> {f}</li>))}</ul>
                 <div className="mt-auto flex flex-wrap gap-1.5 pt-4">{(CURATED[0]?.techStack as string[]).slice(0, 5).map((t) => (<span key={t} className="rounded-full bg-zinc-900 px-2.5 py-1 font-mono text-[10px] font-medium text-white dark:bg-white dark:text-zinc-900">{t}</span>))}</div>
-                <div className="mt-4 flex gap-2">{CURATED[0]?.liveUrl && (<a href={CURATED[0].liveUrl as string} target="_blank" className="inline-flex items-center gap-1.5 rounded-full bg-zinc-900 px-3.5 py-1.5 text-xs font-medium text-white hover:bg-black dark:bg-white dark:text-zinc-900">Live <ExternalLink className="size-3" /></a>)}<a href={CURATED[0]?.githubUrl as string} target="_blank" className="inline-flex items-center gap-1.5 rounded-full border border-zinc-200 bg-white px-3.5 py-1.5 text-xs font-medium hover:bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-800"> <Github className="size-3.5" /> GitHub</a></div>
+                <div className="mt-4 flex gap-2">{CURATED[0]?.liveUrl && (<a href={CURATED[0].liveUrl as string} target="_blank" className="inline-flex items-center gap-1.5 rounded-full bg-zinc-900 px-3.5 py-1.5 text-xs font-medium text-white hover:bg-black dark:bg-white dark:text-zinc-900">Live <ExternalLink className="size-3" /></a>)}{CURATED[0]?.githubUrl && (<a href={CURATED[0]?.githubUrl as string} target="_blank" className="inline-flex items-center gap-1.5 rounded-full border border-zinc-200 bg-white px-3.5 py-1.5 text-xs font-medium hover:bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-800"> <Github className="size-3.5" /> GitHub</a>)}</div>
               </div>
             </SpringCard>
           </Reveal>
@@ -404,7 +408,14 @@ export default function Page() {
                 <p className="mt-1 font-mono text-xs opacity-70">{CURATED[1]?.headline}</p>
                 <p className="mt-3 text-sm leading-relaxed opacity-70 line-clamp-4">{CURATED[1]?.description}</p>
                 <div className="mt-4 flex flex-wrap gap-1.5">{(CURATED[1]?.techStack as string[]).slice(0, 4).map((t) => (<span key={t} className="rounded-full bg-white/10 px-2 py-1 font-mono text-[10px] dark:bg-zinc-900/10">{t}</span>))}</div>
-                <div className="mt-auto flex gap-2 pt-4"><a href={CURATED[1]?.githubUrl as string} target="_blank" className="inline-flex items-center gap-1.5 rounded-full bg-white px-3.5 py-1.5 text-xs font-medium text-zinc-900 dark:bg-zinc-900 dark:text-white"><Github className="size-3.5" /> Code</a><span className="font-mono text-[11px] opacity-60 self-center">{(CURATED[1] as any).localRun?.split("→")[1]?.trim() ?? ""}</span></div>
+                <div className="mt-auto flex gap-2 pt-4 flex-wrap">
+                  {(CURATED[1] as any)?.liveUrl && (
+                    <a href={(CURATED[1] as any).liveUrl} target="_blank" className="inline-flex items-center gap-1.5 rounded-full bg-teal-500 px-3.5 py-1.5 text-xs font-medium text-white hover:bg-teal-600 dark:bg-teal-500 dark:hover:bg-teal-600">
+                      Live <ExternalLink className="size-3" />
+                    </a>
+                  )}
+                  <a href={CURATED[1]?.githubUrl as string} target="_blank" className="inline-flex items-center gap-1.5 rounded-full bg-white px-3.5 py-1.5 text-xs font-medium text-zinc-900 dark:bg-zinc-900 dark:text-white"><Github className="size-3.5" /> Code</a>
+                </div>
               </div>
             </SpringCard>
           </Reveal>
@@ -421,24 +432,56 @@ export default function Page() {
                   <p className="mt-1 font-mono text-[11px] leading-snug text-zinc-500 line-clamp-2 min-h-[2.2em]">{p.headline as string}</p>
                   <p className="mt-2 line-clamp-3 flex-1 font-mono text-[11px] leading-relaxed text-zinc-600 dark:text-zinc-400">{p.description as string}</p>
                   <div className="mt-3 flex flex-wrap gap-1">{(p.techStack as string[]).slice(0, 3).map((t) => (<span key={t} className="rounded-full border border-zinc-200 px-2 py-0.5 font-mono text-[10px] text-zinc-600 dark:border-zinc-800 dark:text-zinc-400">{t}</span>))}</div>
-                  <div className="mt-auto flex gap-2 pt-4">{(p as any).liveUrl && (<a href={(p as any).liveUrl} target="_blank" className="inline-flex items-center gap-1 rounded-full bg-zinc-900 px-3 py-1.5 text-xs font-medium text-white dark:bg-white dark:text-zinc-900">Live <ExternalLink className="size-3" /></a>)}<a href={p.githubUrl as string} target="_blank" className="inline-flex items-center gap-1 rounded-full border px-3 py-1.5 text-xs font-medium hover:bg-zinc-50 dark:border-zinc-700 dark:hover:bg-zinc-800"><Github className="size-3" /> GitHub</a></div>
+                  <div className="mt-auto flex gap-2 pt-4">
+                    {(p as any).liveUrl && (<a href={(p as any).liveUrl} target="_blank" className="inline-flex items-center gap-1 rounded-full bg-zinc-900 px-3 py-1.5 text-xs font-medium text-white dark:bg-white dark:text-zinc-900">Live <ExternalLink className="size-3" /></a>)}
+                    {p.githubUrl && (<a href={p.githubUrl as string} target="_blank" className="inline-flex items-center gap-1 rounded-full border px-3 py-1.5 text-xs font-medium hover:bg-zinc-50 dark:border-zinc-700 dark:hover:bg-zinc-800"><Github className="size-3" /> GitHub</a>)}
+                  </div>
                 </div>
               </SpringCard>
             </Reveal>
           ))}
 
-          <Reveal delay={0.26} y={10} className="md:col-span-8 flex h-full">
-            <SpringCard className="h-full w-full">
-              <div className="relative flex h-full min-h-[220px] flex-col overflow-hidden rounded-[1.5rem] border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900 md:p-6">
-                <div className="absolute -right-10 -top-10 size-48 rounded-full bg-gradient-to-br from-zinc-100 to-zinc-50 blur-2xl dark:from-zinc-800 dark:to-zinc-900" />
-                <h3 className="relative font-[var(--font-display)] text-[17px] font-semibold tracking-tight dark:text-white" style={{ letterSpacing: "-0.03em" }}>{CURATED[5]?.title}</h3>
-                <p className="relative mt-1 font-mono text-xs text-zinc-500">{CURATED[5]?.headline as string}</p>
-                <p className="relative mt-2 text-[13px] leading-relaxed text-zinc-600 dark:text-zinc-400 line-clamp-3">{CURATED[5]?.description as string}</p>
-                <div className="relative mt-3 flex flex-wrap gap-1.5">{(CURATED[5]?.techStack as string[]).slice(0, 5).map((t) => (<span key={t} className="rounded-full bg-zinc-900 px-2.5 py-1 font-mono text-[10px] text-white dark:bg-white dark:text-zinc-900">{t}</span>))}</div>
-                <div className="relative mt-4"><a href={CURATED[5]?.githubUrl as string} target="_blank" className="inline-flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-xs font-medium hover:bg-zinc-50 dark:border-zinc-700"><Github className="size-3.5" /> GitHub</a></div>
-              </div>
-            </SpringCard>
-          </Reveal>
+          {/* bottom row — handles 6 or 7 curated */}
+          {CURATED.length === 7 ? (
+            <>
+              {CURATED.slice(5, 7).map((p, i) => (
+                <Reveal key={p.id} delay={0.26 + i * 0.05} y={10} className="md:col-span-4 flex h-full">
+                  <SpringCard className="h-full w-full">
+                    <div className="group flex h-full min-h-[280px] flex-col rounded-[1.5rem] border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900">
+                      <div className="flex items-start justify-between gap-2">
+                        <span className="inline-flex items-center gap-1.5 rounded-full border border-zinc-200 bg-zinc-50 px-2.5 py-1 font-mono text-[10px] font-medium tracking-wide text-zinc-600 dark:border-zinc-800 dark:bg-zinc-800 dark:text-zinc-300"><Star className="size-3" />{(p.category as string).split(" /")[0]}</span>
+                        <span className="font-mono text-[10px] text-zinc-400">{(p.techStack as string[])[0]}</span>
+                      </div>
+                      <h3 className="mt-3 text-[15px] font-semibold leading-tight tracking-tight text-zinc-900 dark:text-white" style={{ letterSpacing: "-0.02em" }}>{p.title}</h3>
+                      <p className="mt-1 font-mono text-[11px] leading-snug text-zinc-500 line-clamp-2 min-h-[2.2em]">{p.headline as string}</p>
+                      <p className="mt-2 line-clamp-3 flex-1 font-mono text-[11px] leading-relaxed text-zinc-600 dark:text-zinc-400">{p.description as string}</p>
+                      <div className="mt-3 flex flex-wrap gap-1">{(p.techStack as string[]).slice(0, 3).map((t) => (<span key={t} className="rounded-full border border-zinc-200 px-2 py-0.5 font-mono text-[10px] text-zinc-600 dark:border-zinc-800 dark:text-zinc-400">{t}</span>))}</div>
+                      <div className="mt-auto flex gap-2 pt-4">
+                        {(p as any).liveUrl && (<a href={(p as any).liveUrl} target="_blank" className="inline-flex items-center gap-1 rounded-full bg-zinc-900 px-3 py-1.5 text-xs font-medium text-white dark:bg-white dark:text-zinc-900">Live <ExternalLink className="size-3" /></a>)}
+                        {p.githubUrl && (<a href={p.githubUrl as string} target="_blank" className="inline-flex items-center gap-1 rounded-full border px-3 py-1.5 text-xs font-medium hover:bg-zinc-50 dark:border-zinc-700 dark:hover:bg-zinc-800"><Github className="size-3" /> GitHub</a>)}
+                      </div>
+                    </div>
+                  </SpringCard>
+                </Reveal>
+              ))}
+            </>
+          ) : (
+            <Reveal delay={0.26} y={10} className="md:col-span-8 flex h-full">
+              <SpringCard className="h-full w-full">
+                <div className="relative flex h-full min-h-[220px] flex-col overflow-hidden rounded-[1.5rem] border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900 md:p-6">
+                  <div className="absolute -right-10 -top-10 size-48 rounded-full bg-gradient-to-br from-zinc-100 to-zinc-50 blur-2xl dark:from-zinc-800 dark:to-zinc-900" />
+                  <h3 className="relative font-[var(--font-display)] text-[17px] font-semibold tracking-tight dark:text-white" style={{ letterSpacing: "-0.03em" }}>{CURATED[5]?.title}</h3>
+                  <p className="relative mt-1 font-mono text-xs text-zinc-500">{CURATED[5]?.headline as string}</p>
+                  <p className="relative mt-2 text-[13px] leading-relaxed text-zinc-600 dark:text-zinc-400 line-clamp-3">{CURATED[5]?.description as string}</p>
+                  <div className="relative mt-3 flex flex-wrap gap-1.5">{(CURATED[5]?.techStack as string[]).slice(0, 5).map((t) => (<span key={t} className="rounded-full bg-zinc-900 px-2.5 py-1 font-mono text-[10px] text-white dark:bg-white dark:text-zinc-900">{t}</span>))}</div>
+                  <div className="relative mt-4 flex gap-2">
+                    {(CURATED[5] as any)?.liveUrl && (<a href={(CURATED[5] as any).liveUrl} target="_blank" className="inline-flex items-center gap-1.5 rounded-full bg-zinc-900 px-3 py-1.5 text-xs font-medium text-white dark:bg-white dark:text-zinc-900">Live <ExternalLink className="size-3" /></a>)}
+                    {CURATED[5]?.githubUrl && (<a href={CURATED[5]?.githubUrl as string} target="_blank" className="inline-flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-xs font-medium hover:bg-zinc-50 dark:border-zinc-700"><Github className="size-3.5" /> GitHub</a>)}
+                  </div>
+                </div>
+              </SpringCard>
+            </Reveal>
+          )}
 
           <Reveal delay={0.3} y={10} className="md:col-span-4 flex h-full">
             <div className="flex h-full min-h-[220px] flex-col rounded-[1.5rem] border border-dashed border-zinc-300 bg-zinc-50 p-5 dark:border-zinc-700 dark:bg-zinc-900/40">
@@ -481,7 +524,9 @@ export default function Page() {
       <section className="mx-auto max-w-[1200px] px-4 py-10 md:px-8 md:py-12">
         <div className="grid gap-6 md:grid-cols-[1.1fr_0.9fr]">
           <Reveal>
-            <div className="rounded-[1.5rem] border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900"><h3 className="font-[var(--font-display)] text-lg font-semibold tracking-tight dark:text-white" style={{ letterSpacing: "-0.03em" }}>About</h3><p className="mt-2 text-pretty text-[13.5px] leading-relaxed text-zinc-600 dark:text-zinc-400">{RESUME_DATA.summary}</p><div className="mt-4 flex flex-wrap gap-2"><a href={RESUME_DATA.locationLink} target="_blank" className="inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 font-mono text-xs hover:bg-zinc-50 dark:border-zinc-800"><GlobeIcon className="size-3.5" /> {RESUME_DATA.location}</a><a href={`tel:${RESUME_DATA.contact.tel}`} className="inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 font-mono text-xs hover:bg-zinc-50 dark:border-zinc-800"><PhoneIcon className="size-3.5" /> {RESUME_DATA.contact.tel}</a></div></div>
+            <div className="rounded-[1.5rem] border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900"><h3 className="font-[var(--font-display)] text-lg font-semibold tracking-tight dark:text-white" style={{ letterSpacing: "-0.03em" }}>About</h3><p className="mt-2 text-pretty text-[13.5px] leading-relaxed text-zinc-600 dark:text-zinc-400">{RESUME_DATA.summary}</p><div className="mt-4 flex flex-wrap gap-2"><a href={RESUME_DATA.locationLink} target="_blank" className="inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 font-mono text-xs hover:bg-zinc-50 dark:border-zinc-800"><GlobeIcon className="size-3.5" /> {RESUME_DATA.location}</a><a href={`tel:${RESUME_DATA.contact.tel}`} className="inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 font-mono text-xs hover:bg-zinc-50 dark:border-zinc-800"><PhoneIcon className="size-3.5" /> {RESUME_DATA.contact.tel}</a></div>
+              <AboutIllustration />
+            </div>
           </Reveal>
           <Reveal delay={0.06}>
             <div className="space-y-6">

@@ -90,10 +90,10 @@
 @keyframes shimmer {
   100% { transform: translateX(100%); }
 }
-/* draggable pill bob — compositor-only, pauses on drag */
+/* draggable pill bob — compositor-only, preserves tilt via --pill-rotate */
 @keyframes pill-bob {
-  0% { transform: translateY(-2.5px); }
-  100% { transform: translateY(2.5px); }
+  0% { transform: rotate(var(--pill-rotate, 0deg)) translateY(-2.5px); }
+  100% { transform: rotate(var(--pill-rotate, 0deg)) translateY(2.5px); }
 }
 .pill-bob {
   animation: pill-bob 3.8s ease-in-out infinite alternate;
