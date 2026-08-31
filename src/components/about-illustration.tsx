@@ -108,12 +108,12 @@ export function AboutIllustration() {
         .illustration-line-1, .illustration-line-2, .illustration-line-3, .illustration-line-4, .illustration-line-5 {
           stroke-dasharray: 120;
           stroke-dashoffset: 120;
-          animation: drawLine 0.95s cubic-bezier(0.16,1,0.3,1) forwards;
+          animation: drawLine 0.52s var(--ease-emphasized) forwards;
         }
-        .illustration-line-2 { animation-delay: 0.1s; }
-        .illustration-line-3 { animation-delay: 0.2s; }
-        .illustration-line-4 { animation-delay: 0.3s; }
-        .illustration-line-5 { animation-delay: 0.4s; }
+        .illustration-line-2 { animation-delay: 0.06s; }
+        .illustration-line-3 { animation-delay: 0.12s; }
+        .illustration-line-4 { animation-delay: 0.18s; }
+        .illustration-line-5 { animation-delay: 0.24s; }
         @keyframes drawLine { to { stroke-dashoffset: 0; } }
 
         .illustration-cursor { animation: cursorBlink 0.85s steps(1) infinite; }

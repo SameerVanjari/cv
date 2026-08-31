@@ -24,6 +24,13 @@
     --input: 240 5.9% 90%;
     --ring: 240 5.9% 10%;
     --radius: 0.75rem;
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+    --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+    --ease-emphasized: cubic-bezier(0.16, 1, 0.3, 1);
+    --duration-fast: 160ms;
+    --duration-medium: 240ms;
+    --duration-entrance: 320ms;
   }
   .dark {
     --background: 240 10% 3.9%;
@@ -107,10 +114,33 @@
 @media (prefers-reduced-motion: reduce) {
   .shimmer::after { display: none; }
   .pill-bob { animation: none !important; }
-  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  .illustration-float-1,
+  .illustration-float-2,
+  .illustration-float-3,
+  .illustration-float-4,
+  .illustration-dash,
+  .illustration-dash-2 { animation: none !important; }
+  .illustration-line-1,
+  .illustration-line-2,
+  .illustration-line-3,
+  .illustration-line-4,
+  .illustration-line-5 { stroke-dashoffset: 0 !important; }
+  /* Keep opacity/color transitions for comprehension; just ensure no infinite motion */
+  * {
+    scroll-behavior: auto !important;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+  /* Do NOT set transition-duration globally — rely on useReducedMotion per component */
 }
 @media (hover: none), (pointer: coarse) {
   .pill-bob { animation: none !important; }
+  /* Gate hover-driven transforms — prevent sticky hovers on touch */
+  .hover\:scale-105:hover { transform: none !important; }
+  .group-hover\:rotate-45 { transform: none !important; }
+  .hover\:scale-\[1\.02\]:hover { transform: none !important; }
 }
 
 /* scrollbar */

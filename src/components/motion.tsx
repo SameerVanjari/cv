@@ -17,10 +17,10 @@ export function Reveal({
   const reduce = useReducedMotion();
   return (
     <motion.div
-      initial={reduce ? false : { opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={reduce ? false : { opacity: 0, transform: `translateY(${y}px)` }}
+      whileInView={{ opacity: 1, transform: "translateY(0px)" }}
       viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.7, delay, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.32, delay, ease: [0.23, 1, 0.32, 1] }}
       className={className}
     >
       {children}
@@ -30,7 +30,7 @@ export function Reveal({
 
 export function Stagger({
   children,
-  stagger = 0.08,
+  stagger = 0.06,
   className,
 }: {
   children: React.ReactNode[];
@@ -53,8 +53,8 @@ export function Stagger({
         <motion.div
           key={i}
           variants={{
-            hidden: reduce ? { opacity: 1 } : { opacity: 0, y: 16 },
-            show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
+            hidden: reduce ? { opacity: 1 } : { opacity: 0, transform: "translateY(16px)" },
+            show: { opacity: 1, transform: "translateY(0px)", transition: { duration: 0.32, ease: [0.23, 1, 0.32, 1] } },
           }}
         >
           {c}
@@ -72,6 +72,8 @@ export function Magnetic({ children, className }: { children: React.ReactNode; c
   const sx = useSpring(x, { stiffness: 200, damping: 18 });
   const sy = useSpring(y, { stiffness: 200, damping: 18 });
   const reduce = useReducedMotion();
+
+  const transform = useTransform([sx, sy] as any, ([x, y]: number[]) => `translate(${x}px, ${y}px)`);
 
   useEffect(() => {
     if (reduce) return;
@@ -95,7 +97,7 @@ export function Magnetic({ children, className }: { children: React.ReactNode; c
 
   if (reduce) return <div className={className}>{children}</div>;
   return (
-    <motion.div ref={ref} style={{ x: sx, y: sy }} className={className}>
+    <motion.div ref={ref} style={{ transform }} className={className}>
       {children}
     </motion.div>
   );
@@ -109,10 +111,10 @@ export function Parallax({ children, offset = 30 }: { children: React.ReactNode;
   return (
     <motion.div
       ref={ref}
-      initial={{ y: 0 }}
-      whileInView={{ y: [offset, 0] }}
+      initial={{ transform: "translateY(0px)" }}
+      whileInView={{ transform: [`translateY(${offset}px)`, "translateY(0px)"] }}
       viewport={{ once: true }}
-      transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.9, ease: [0.23, 1, 0.32, 1] }}
     >
       {children}
     </motion.div>

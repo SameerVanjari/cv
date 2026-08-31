@@ -98,11 +98,11 @@ function Reveal({
   return (
     <motion.div
       className={className}
-      initial={reduce ? { opacity: 0 } : { opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={reduce ? { opacity: 0, transform: "translateY(0px)" } : { opacity: 0, transform: `translateY(${y}px)` }}
+      whileInView={{ opacity: 1, transform: "translateY(0px)" }}
       viewport={{ once: true, amount: 0.22 }}
       transition={
-        reduce ? { duration: 0.2, delay } : { type: "spring", bounce: 0, duration: 0.55, delay }
+        reduce ? { duration: 0.2, delay } : { type: "spring", bounce: 0, duration: 0.42, delay }
       }
     >
       {children}
@@ -121,8 +121,8 @@ function SpringCard({
   return (
     <motion.div
       className={className}
-      whileHover={reduce ? undefined : { y: -3 }}
-      whileTap={reduce ? undefined : { scale: 0.985 }}
+      whileHover={reduce ? undefined : { transform: "translateY(-3px)" }}
+      whileTap={reduce ? undefined : { transform: "scale(0.985)" }}
       transition={{ type: "spring", bounce: 0, duration: 0.35 }}
     >
       {children}
@@ -192,6 +192,14 @@ export default function Page() {
   const reduce = useReducedMotion();
   const heroRef = useRef<HTMLDivElement>(null);
   const [copied, setCopied] = useState(false);
+  const [canHover, setCanHover] = useState(false);
+  useEffect(() => {
+    const m = window.matchMedia("(hover: hover) and (pointer: fine)");
+    const update = () => setCanHover(m.matches);
+    update();
+    m.addEventListener("change", update);
+    return () => m.removeEventListener("change", update);
+  }, []);
   const copyEmail = async () => {
     await navigator.clipboard.writeText(RESUME_DATA.contact.email);
     setCopied(true);
@@ -218,7 +226,7 @@ export default function Page() {
             <span className="h-4 w-px bg-zinc-200 dark:bg-zinc-800" />
             <motion.a
               href={`mailto:${RESUME_DATA.contact.email}`}
-              whileTap={reduce ? undefined : { scale: 0.97 }}
+              whileTap={reduce ? undefined : { transform: "scale(0.97)" }}
               transition={{ duration: 0.1 }}
               className="inline-flex items-center gap-1.5 rounded-full bg-zinc-900 px-4 py-2 font-mono text-xs font-medium text-white hover:bg-zinc-800 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-100"
             >
@@ -260,11 +268,11 @@ export default function Page() {
             </Reveal>
             <Reveal delay={0.16}>
               <div className="mt-7 flex flex-wrap items-center gap-3">
-                <motion.a href="#projects" whileTap={reduce ? undefined : { scale: 0.97 }} transition={{ type: "spring", bounce: 0, duration: 0.3 }} className="group inline-flex items-center gap-2 rounded-full bg-zinc-900 px-6 py-3 text-sm font-medium text-white shadow-[0_10px_28px_rgba(0,0,0,0.14)] hover:bg-black dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-100" style={{ willChange: "transform" }}>
+                <motion.a href="#projects" whileTap={reduce ? undefined : { transform: "scale(0.97)" }} transition={{ type: "spring", bounce: 0, duration: 0.3 }} className="group inline-flex items-center gap-2 rounded-full bg-zinc-900 px-6 py-3 text-sm font-medium text-white shadow-[0_10px_28px_rgba(0,0,0,0.14)] hover:bg-black dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-100" style={{ willChange: "transform" }}>
                   View selected work
                   <span className="flex size-6 items-center justify-center rounded-full bg-white text-zinc-900 transition-transform group-hover:rotate-45 dark:bg-zinc-900 dark:text-white"><ArrowUpRight className="size-3.5" /></span>
                 </motion.a>
-                <motion.button onClick={copyEmail} whileTap={reduce ? undefined : { scale: 0.97 }} transition={{ duration: 0.1 }} className="inline-flex items-center gap-2 rounded-full border border-zinc-900/10 bg-white px-5 py-3 text-sm font-medium text-zinc-900 hover:bg-zinc-50 dark:border-white/10 dark:bg-zinc-900 dark:text-white dark:hover:bg-zinc-800" style={{ willChange: "transform" }}>
+                <motion.button onClick={copyEmail} whileTap={reduce ? undefined : { transform: "scale(0.97)" }} transition={{ duration: 0.1 }} className="inline-flex items-center gap-2 rounded-full border border-zinc-900/10 bg-white px-5 py-3 text-sm font-medium text-zinc-900 hover:bg-zinc-50 dark:border-white/10 dark:bg-zinc-900 dark:text-white dark:hover:bg-zinc-800" style={{ willChange: "transform" }}>
                   <Copy className="size-4 opacity-60" />{copied ? "Copied!" : "Copy email"}
                 </motion.button>
                 <span className="hidden items-center gap-1.5 font-mono text-xs text-zinc-500 md:inline-flex"><span className="size-1 rounded-full bg-emerald-500" /> ssv6132@gmail.com · response &lt; 24h</span>
@@ -289,7 +297,7 @@ export default function Page() {
           <Reveal delay={0.08}>
             <div ref={heroRef} className="relative mx-auto max-w-[420px]">
               <div aria-hidden className="absolute -inset-6 -z-10 rounded-[2.2rem] bg-gradient-to-br from-teal-500/20 via-indigo-500/15 to-sky-500/20 blur-2xl" />
-              <motion.div initial={reduce ? { opacity: 0 } : { opacity: 0, y: 10, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={reduce ? { duration: 0.2 } : { type: "spring", bounce: 0, duration: 0.6 }} className="relative overflow-hidden rounded-[2rem] border border-zinc-200 bg-white p-3 shadow-[0_24px_64px_rgba(0,0,0,0.10)] dark:border-zinc-800 dark:bg-zinc-900">
+              <motion.div initial={reduce ? { opacity: 0 } : { opacity: 0, transform: "translateY(10px) scale(0.98)" }} animate={{ opacity: 1, transform: "translateY(0px) scale(1)" }} transition={reduce ? { duration: 0.2 } : { type: "spring", bounce: 0, duration: 0.6 }} className="relative overflow-hidden rounded-[2rem] border border-zinc-200 bg-white p-3 shadow-[0_24px_64px_rgba(0,0,0,0.10)] dark:border-zinc-800 dark:bg-zinc-900">
                 <div className="relative aspect-[4/3.4] overflow-hidden rounded-[1.4rem] bg-zinc-100 dark:bg-zinc-800">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img alt={RESUME_DATA.name} src={RESUME_DATA.avatarUrl} className="h-full w-full object-cover object-[50%_18%]" />
@@ -319,7 +327,7 @@ export default function Page() {
               <DraggablePill constraintsRef={heroRef} bobDelay={0} bobClass="" rotate={-1.8} className="absolute -left-3 top-6 hidden items-center gap-2 rounded-full border border-zinc-200 bg-white px-3 py-2 shadow-[0_8px_24px_rgba(0,0,0,0.12)] md:inline-flex dark:border-zinc-800 dark:bg-zinc-900">
                 <span className="size-2 rounded-full bg-emerald-500" /><span className="font-mono text-xs font-semibold tracking-wide text-zinc-900 dark:text-white">React Three Fiber</span>
               </DraggablePill>
-              <DraggablePill constraintsRef={heroRef} bobDelay={1.1} bobClass="pill-bob-delay-1" rotate={2.4} className="absolute -right-2 bottom-28 hidden items-center gap-2 rounded-full border border-teal-500/20 bg-teal-600 px-3 py-2 text-white shadow-[0_8px_24px_rgba(20,184,166,0.28)] md:inline-flex dark:border-teal-500/30 dark:bg-teal-500 dark:text-white">
+              <DraggablePill constraintsRef={heroRef} bobDelay={1.1} bobClass="pill-bob-delay-1" rotate={2.4} className="absolute -right-2 bottom-44 hidden items-center gap-2 rounded-full border border-teal-500/20 bg-teal-600 px-3 py-2 text-white shadow-[0_8px_24px_rgba(20,184,166,0.28)] md:inline-flex dark:border-teal-500/30 dark:bg-teal-500 dark:text-white">
                 <Layers className="size-3.5" /><span className="font-mono text-xs font-medium">Module Federation</span>
               </DraggablePill>
             </div>
@@ -384,8 +392,14 @@ export default function Page() {
           </div>
         </Reveal>
 
-        <div className="mt-7 grid gap-4 md:grid-cols-12 md:auto-rows-fr auto-rows-fr items-stretch">
-          <Reveal delay={0.04} y={10} className="md:col-span-8 flex h-full">
+        <motion.div
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={{ hidden: {}, show: { transition: { staggerChildren: reduce ? 0 : 0.06 } } }}
+          className="mt-7 grid gap-4 md:grid-cols-12 md:auto-rows-fr auto-rows-fr items-stretch"
+        >
+          <motion.div variants={{ hidden: reduce ? { opacity: 1 } : { opacity: 0, transform: "translateY(16px)" }, show: { opacity: 1, transform: "translateY(0px)", transition: { duration: 0.32, ease: [0.23, 1, 0.32, 1] } } }} className="md:col-span-8 flex h-full">
             <SpringCard className="h-full w-full">
               <div className="group relative flex h-full min-h-[280px] flex-col overflow-hidden rounded-[1.5rem] border border-zinc-200 bg-white p-5 shadow-[0_8px_32px_rgba(0,0,0,0.04)] dark:border-zinc-800 dark:bg-zinc-900 md:p-6">
                 <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-teal-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -398,9 +412,9 @@ export default function Page() {
                 <div className="mt-4 flex gap-2">{CURATED[0]?.liveUrl && (<a href={CURATED[0].liveUrl as string} target="_blank" className="inline-flex items-center gap-1.5 rounded-full bg-zinc-900 px-3.5 py-1.5 text-xs font-medium text-white hover:bg-black dark:bg-white dark:text-zinc-900">Live <ExternalLink className="size-3" /></a>)}{CURATED[0]?.githubUrl && (<a href={CURATED[0]?.githubUrl as string} target="_blank" className="inline-flex items-center gap-1.5 rounded-full border border-zinc-200 bg-white px-3.5 py-1.5 text-xs font-medium hover:bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-800"> <Github className="size-3.5" /> GitHub</a>)}</div>
               </div>
             </SpringCard>
-          </Reveal>
+          </motion.div>
 
-          <Reveal delay={0.08} y={10} className="md:col-span-4 flex h-full">
+          <motion.div variants={{ hidden: reduce ? { opacity: 1 } : { opacity: 0, transform: "translateY(16px)" }, show: { opacity: 1, transform: "translateY(0px)", transition: { duration: 0.32, ease: [0.23, 1, 0.32, 1] } } }} className="md:col-span-4 flex h-full">
             <SpringCard className="h-full w-full">
               <div className="flex h-full min-h-[280px] flex-col rounded-[1.5rem] border border-zinc-900 bg-zinc-900 p-6 text-white dark:border-zinc-800 dark:bg-white dark:text-zinc-900">
                 <div className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-2.5 py-1 font-mono text-[10px] tracking-wide dark:bg-zinc-900/10"><Gamepad2 className="size-3" /> 3D · INTERACTIVE</div>
@@ -418,10 +432,10 @@ export default function Page() {
                 </div>
               </div>
             </SpringCard>
-          </Reveal>
+          </motion.div>
 
           {CURATED.slice(2, 5).map((p, i) => (
-            <Reveal key={p.id} delay={0.1 + i * 0.05} y={10} className="md:col-span-4 flex h-full">
+            <motion.div key={p.id} variants={{ hidden: reduce ? { opacity: 1 } : { opacity: 0, transform: "translateY(16px)" }, show: { opacity: 1, transform: "translateY(0px)", transition: { duration: 0.32, ease: [0.23, 1, 0.32, 1] } } }} className="md:col-span-4 flex h-full">
               <SpringCard className="h-full w-full">
                 <div className="group flex h-full min-h-[280px] flex-col rounded-[1.5rem] border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900">
                   <div className="flex items-start justify-between gap-2">
@@ -438,14 +452,14 @@ export default function Page() {
                   </div>
                 </div>
               </SpringCard>
-            </Reveal>
+            </motion.div>
           ))}
 
           {/* bottom row — handles 6 or 7 curated */}
           {CURATED.length === 7 ? (
             <>
               {CURATED.slice(5, 7).map((p, i) => (
-                <Reveal key={p.id} delay={0.26 + i * 0.05} y={10} className="md:col-span-4 flex h-full">
+                <motion.div key={p.id} variants={{ hidden: reduce ? { opacity: 1 } : { opacity: 0, transform: "translateY(16px)" }, show: { opacity: 1, transform: "translateY(0px)", transition: { duration: 0.32, ease: [0.23, 1, 0.32, 1] } } }} className="md:col-span-4 flex h-full">
                   <SpringCard className="h-full w-full">
                     <div className="group flex h-full min-h-[280px] flex-col rounded-[1.5rem] border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900">
                       <div className="flex items-start justify-between gap-2">
@@ -462,11 +476,11 @@ export default function Page() {
                       </div>
                     </div>
                   </SpringCard>
-                </Reveal>
+                </motion.div>
               ))}
             </>
           ) : (
-            <Reveal delay={0.26} y={10} className="md:col-span-8 flex h-full">
+            <motion.div variants={{ hidden: reduce ? { opacity: 1 } : { opacity: 0, transform: "translateY(16px)" }, show: { opacity: 1, transform: "translateY(0px)", transition: { duration: 0.32, ease: [0.23, 1, 0.32, 1] } } }} className="md:col-span-8 flex h-full">
               <SpringCard className="h-full w-full">
                 <div className="relative flex h-full min-h-[220px] flex-col overflow-hidden rounded-[1.5rem] border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900 md:p-6">
                   <div className="absolute -right-10 -top-10 size-48 rounded-full bg-gradient-to-br from-zinc-100 to-zinc-50 blur-2xl dark:from-zinc-800 dark:to-zinc-900" />
@@ -480,18 +494,18 @@ export default function Page() {
                   </div>
                 </div>
               </SpringCard>
-            </Reveal>
+            </motion.div>
           )}
 
-          <Reveal delay={0.3} y={10} className="md:col-span-4 flex h-full">
+          <motion.div variants={{ hidden: reduce ? { opacity: 1 } : { opacity: 0, transform: "translateY(16px)" }, show: { opacity: 1, transform: "translateY(0px)", transition: { duration: 0.32, ease: [0.23, 1, 0.32, 1] } } }} className="md:col-span-4 flex h-full">
             <div className="flex h-full min-h-[220px] flex-col rounded-[1.5rem] border border-dashed border-zinc-300 bg-zinc-50 p-5 dark:border-zinc-700 dark:bg-zinc-900/40">
               <div className="font-mono text-[11px] tracking-[0.14em] text-zinc-500">MORE ON GITHUB</div>
               <p className="mt-2 text-sm leading-relaxed text-zinc-700 dark:text-zinc-300">Also: <span className="font-medium">IronForge PT</span> (AI Studio + Motion), <span className="font-medium">Perspective Workforce</span> (corporate) & <span className="font-medium">Dry Cleaning Sample</span> (Next.js).</p>
               <a href="https://github.com/SameerVanjari" target="_blank" className="mt-4 inline-flex items-center gap-1.5 font-mono text-xs font-medium text-zinc-900 hover:underline dark:text-white"><Github className="size-3.5" /> github.com/SameerVanjari <ArrowUpRight className="size-3" /></a>
               <p className="mt-3 font-mono text-[11px] leading-relaxed text-zinc-500">Curated to highlight <span className="font-medium text-zinc-700 dark:text-zinc-300">React 19 / Next 15 / Three.js / WebXR / TanStack</span> depth.</p>
             </div>
-          </Reveal>
-        </div>
+          </motion.div>
+        </motion.div>
       </section>
 
       {/* SKILLS */}
@@ -509,9 +523,9 @@ export default function Page() {
                 { label: "3D & Motion", items: ["Three.js", "React Three Fiber", "WebGL", "GLSL", "Motion"] },
                 { label: "State & Data", items: ["Redux Toolkit", "Zustand", "Context API", "GraphQL", "REST APIs"] },
               ].map((g, gi) => (
-                <motion.div key={g.label} initial={reduce ? { opacity: 0 } : { opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ type: "spring", bounce: 0, duration: 0.5, delay: gi * 0.05 }} className="rounded-2xl border border-zinc-100 bg-zinc-50 p-4 dark:border-zinc-800 dark:bg-zinc-800/40">
+                <motion.div key={g.label} initial={reduce ? { opacity: 0 } : { opacity: 0, transform: "translateY(8px)" }} whileInView={{ opacity: 1, transform: "translateY(0px)" }} viewport={{ once: true, amount: 0.3 }} transition={{ type: "spring", bounce: 0, duration: 0.5, delay: gi * 0.05 }} className="rounded-2xl border border-zinc-100 bg-zinc-50 p-4 dark:border-zinc-800 dark:bg-zinc-800/40">
                   <div className="font-mono text-[10px] tracking-[0.16em] text-zinc-500">{g.label.toUpperCase()}</div>
-                  <div className="mt-3 flex flex-wrap gap-1.5">{g.items.map((s) => (<motion.span key={s} whileHover={reduce ? undefined : { y: -1 }} whileTap={reduce ? undefined : { scale: 0.97 }} className="cursor-default rounded-full border border-zinc-200 bg-white px-2.5 py-1 font-mono text-[11px] font-medium text-zinc-700 hover:border-zinc-900 hover:bg-zinc-900 hover:text-white dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:bg-white dark:hover:text-zinc-900">{s}</motion.span>))}</div>
+                  <div className="mt-3 flex flex-wrap gap-1.5">{g.items.map((s) => (<motion.span key={s} whileHover={reduce || !canHover ? undefined : { transform: "translateY(-1px)" }} whileTap={reduce ? undefined : { transform: "scale(0.97)" }} className="cursor-default rounded-full border border-zinc-200 bg-white px-2.5 py-1 font-mono text-[11px] font-medium text-zinc-700 hover:border-zinc-900 hover:bg-zinc-900 hover:text-white dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:bg-white dark:hover:text-zinc-900">{s}</motion.span>))}</div>
                 </motion.div>
               ))}
             </div>
