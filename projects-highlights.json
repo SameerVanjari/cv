@@ -24,12 +24,34 @@
         "Captured pieces display"
       ],
       "githubUrl": "https://github.com/SameerVanjari/chess-game",
-      "liveUrl": null,
+      "liveUrl": "https://3d-chesss.netlify.app/",
       "localRun": "npm install && npm run dev → http://localhost:5173",
       "language": "TypeScript",
       "createdAt": "2025-10-23",
       "updatedAt": "2025-10-23",
       "highlightReason": "Most starred 3D/WebGL demo on profile — showcases React Three Fiber / shader foundation mentioned in CV summary"
+    },
+    {
+      "id": "zitics-com",
+      "title": "Zitics Pvt Ltd — Company Website",
+      "slug": "zitics-com",
+      "category": "Corporate / Marketing Site / WordPress",
+      "headline": "WordPress marketing site with SVG line animations and micro-interactions",
+      "description": "End-to-end company website for Zitics Pvt Ltd built on WordPress with a custom theme. Features SVG line-draw animations in the hero, orchestrated micro-interactions across sections, custom contact & career flows, and a performant, SEO-optimized WordPress delivery focused on lead generation.",
+      "techStack": ["WordPress", "Custom Theme", "SVG Animations", "PHP", "JavaScript", "Figma"],
+      "features": [
+        "SVG line-draw animation hero",
+        "Micro-interactions across sections",
+        "Custom theme + contact & career flows",
+        "Performance & SEO optimized",
+        "Lead generation focused marketing site"
+      ],
+      "githubUrl": null,
+      "liveUrl": "https://zitics.com/",
+      "language": "PHP",
+      "createdAt": "2024-07-20",
+      "updatedAt": "2024-12-01",
+      "highlightReason": "Company marketing site delivered end-to-end — WordPress + SVG motion + micro-interactions"
     },
     {
       "id": "tuscani-villa",
